@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import MyContext from "../../../context/data/MyContext";
 
 function AddProduct() {
+  const context = useContext(MyContext);
+  const { products, setProducts, addProduct } = context;
+
   return (
     <div>
       <div className=" flex justify-center items-center h-screen">
@@ -13,6 +17,10 @@ function AddProduct() {
           <div>
             <input
               type="text"
+              value={products.title}
+              onChange={(e) =>
+                setProducts({ ...products, title: e.target.value })
+              }
               name="title"
               className=" bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
               placeholder="Product title"
@@ -21,6 +29,10 @@ function AddProduct() {
           <div>
             <input
               type="text"
+              onChange={(e) =>
+                setProducts({ ...products, price: e.target.value })
+              }
+              value={products.price}
               name="price"
               className=" bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
               placeholder="Product price"
@@ -29,6 +41,10 @@ function AddProduct() {
           <div>
             <input
               type="text"
+              onChange={(e) =>
+                setProducts({ ...products, imageUrl: e.target.value })
+              }
+              value={products.imageUrl}
               name="imageurl"
               className=" bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
               placeholder="Product imageUrl"
@@ -37,6 +53,10 @@ function AddProduct() {
           <div>
             <input
               type="text"
+              onChange={(e) =>
+                setProducts({ ...products, category: e.target.value })
+              }
+              value={products.category}
               name="category"
               className=" bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
               placeholder="Product category"
@@ -47,12 +67,18 @@ function AddProduct() {
               cols="30"
               rows="10"
               name="title"
+              onChange={(e) =>
+                setProducts({ ...products, description: e.target.value })
+              }
               className=" bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
               placeholder="Product title"
             ></textarea>
           </div>
           <div className=" flex justify-center mb-3">
-            <button className=" bg-yellow-500 w-full text-black font-bold  px-2 py-2 rounded-lg">
+            <button
+              onClick={addProduct}
+              className=" bg-yellow-500 w-full text-black font-bold  px-2 py-2 rounded-lg"
+            >
               Add Product
             </button>
           </div>
