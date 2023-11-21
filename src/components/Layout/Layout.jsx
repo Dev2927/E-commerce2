@@ -1,15 +1,17 @@
-import React from "react";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
+import React from 'react'
+import Navbar from '../navbar/Navbar'
+import Footer from '../footer/Footer'
 
-function Layout({ children }) {
+function Layout({children}) {
   return (
     <div>
-      <Navbar />
-      <div className="content">{children}</div>
-      <Footer />
+        <Navbar/>
+        <div className="content">
+            {children}
+        </div>
+        <Footer/>
     </div>
-  );
+  )
 }
 
-export default Layout;
+export default Layout

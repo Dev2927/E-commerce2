@@ -1,24 +1,28 @@
 import React, { Fragment, useContext, useState } from "react";
-import MyContext from "../../context/data/MyContext";
+import myContext from "../../context/data/myContext";
 import { BsFillCloudSunFill } from "react-icons/bs";
-import { Dialog, Transition } from "@headlessui/react";
 import { FiSun } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { Dialog, Transition } from "@headlessui/react";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 
 function Navbar() {
-  const [open, setOpen] = useState(false);
-
-  const context = useContext(MyContext);
+  const context = useContext(myContext);
   const { mode, toggleMode } = context;
 
+  const [open, setOpen] = useState(false);
+
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log(user)
+
+  // console.log(user.user.email)
 
   const logout = () => {
     localStorage.clear("user");
     window.location.href = "/login";
   };
+
+  const cartItems = useSelector((state) => state.cart);
 
   return (
     <div className="bg-white sticky top-0 z-50">
@@ -71,8 +75,9 @@ function Navbar() {
                   >
                     All Products
                   </Link>
-                  <div className="flow-root">
-                    {user ? (
+
+                  {user ? (
+                    <div className="flow-root">
                       <Link
                         to={"/order"}
                         style={{ color: mode === "dark" ? "white" : "" }}
@@ -80,13 +85,13 @@ function Navbar() {
                       >
                         Order
                       </Link>
-                    ) : (
-                      ""
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
-                  <div className="flow-root">
-                    {user?.user?.email === "devanand290702@gmail.com" ? (
+                  {user?.user?.email === "devanand290702@gmail.com" ? (
+                    <div className="flow-root">
                       <Link
                         to={"/dashboard"}
                         className="-m-2 block p-2 font-medium text-gray-900"
@@ -94,13 +99,13 @@ function Navbar() {
                       >
                         admin
                       </Link>
-                    ) : (
-                      ""
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
-                  <div className="flow-root">
-                    {user ? (
+                  {user ? (
+                    <div className="flow-root">
                       <a
                         onClick={logout}
                         className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
@@ -108,10 +113,18 @@ function Navbar() {
                       >
                         Logout
                       </a>
-                    ) : (
-                      ""
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className="flow-root">
+                      <Link
+                        to={"/signup"}
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        Signup
+                      </Link>
+                    </div>
+                  )}
                   <div className="flow-root">
                     <Link
                       to={"/"}
@@ -150,18 +163,18 @@ function Navbar() {
 
       <header className="relative bg-white">
         <p
-          className="flex h-10 items-center justify-center bg-[#1640D6] px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
+          className="flex h-10 items-center justify-center bg-[#00A9FF] px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
           style={{
             backgroundColor: mode === "dark" ? "rgb(62 64 66)" : "",
             color: mode === "dark" ? "white" : "",
           }}
         >
-          Get free delivery on orders over ₹300
+          Get free delivery on orders over ₹1000
         </p>
 
         <nav
           aria-label="Top"
-          className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl "
+          className="bg-white-100 px-4 sm:px-6 lg:px-8 shadow-xl "
           style={{
             backgroundColor: mode === "dark" ? "#282c34" : "",
             color: mode === "dark" ? "white" : "",
@@ -188,7 +201,7 @@ function Navbar() {
                   class="w-6 h-6"
                 >
                   <path
-                    stroke-linecap="round"
+                    strokeLinecap="round"
                     stroke-linejoin="round"
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                   />
@@ -218,7 +231,6 @@ function Navbar() {
                   >
                     All Products
                   </Link>
-                  
                   {user ? (
                     <Link
                       to={"/order"}
@@ -228,7 +240,13 @@ function Navbar() {
                       Order
                     </Link>
                   ) : (
-                    ""
+                    <Link
+                      to={"/signup"}
+                      className="text-sm font-medium text-gray-700 "
+                      style={{ color: mode === "dark" ? "white" : "" }}
+                    >
+                      Signup
+                    </Link>
                   )}
 
                   {user?.user?.email === "devanand290702@gmail.com" ? (
@@ -271,20 +289,9 @@ function Navbar() {
                     </span>
                   </a>
                 </div>
-                {/* <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 ">
-                    <img
-                      className="inline-block w-10 h-10 rounded-full"
-                      src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                      alt="Dan_Abromov"
-                    />
-                  </a>
-                </div> */}
 
-                {/* Search */}
                 <div className="flex lg:ml-6">
                   <button className="" onClick={toggleMode}>
-                    {/* <MdDarkMode size={35} style={{ color: mode === 'dark' ? 'white' : '' }} /> */}
                     {mode === "light" ? (
                       <FiSun className="" size={30} />
                     ) : "dark" ? (
@@ -321,7 +328,7 @@ function Navbar() {
                       className="ml-2 text-sm font-medium text-gray-700 group-"
                       style={{ color: mode === "dark" ? "white" : "" }}
                     >
-                      0
+                      {cartItems.length}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>
